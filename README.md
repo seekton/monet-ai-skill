@@ -273,7 +273,7 @@ import {
 
 MIT
 
-## cURL Examples
+## curl Examples
 
 ### Create Task (Async)
 

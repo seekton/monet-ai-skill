@@ -142,7 +142,7 @@ const monet = new MonetAI({
 MONET_API_KEY=monet_xxx
 ```
 
-## cURL Examples
+## curl Examples
 
 ### Create Task
 
