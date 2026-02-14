@@ -64,7 +64,7 @@ If you don't have an API Key, ask your owner to apply at monet.vision.
 ```typescript
 const monet = new MonetAI({
   apiKey: "monet_xxx",    // Required: Your API key
-  timeout: 60000          // Optional: Request timeout in ms
+  timeout: 60000          // Optional: Request timeout in ms (default: 60000)
 });
 ```
 
@@ -126,156 +126,679 @@ const list = await monet.listTasks({
 ### Video Generation
 
 #### Sora (OpenAI)
-| Model | Parameters |
-|-------|------------|
-| sora-2 | prompt, images, **duration: 10\|15**, aspect_ratio: 16:9\|9:16 |
-| sora-2-pro | prompt, images, **duration: 15\|25**, aspect_ratio: 16:9\|9:16 |
+
+**sora-2**
+```typescript
+{
+  model: "sora-2",                    // Required: literal type
+  prompt: "A cat running in the park", // Required: string
+  images?: string[],                   // Optional: reference images (URLs)
+  duration?: 10 | 15,                 // Optional: number (10 or 15), default: 10
+  aspectRatio?: "16:9" | "9:16"       // Optional: "16:9" or "9:16"
+}
+
+// Example:
+await monet.createTask({
+  type: "video",
+  input: {
+    model: "sora-2",
+    prompt: "A golden retriever running on the beach at sunset",
+    duration: 15,
+    aspectRatio: "16:9"
+  }
+});
+```
+
+**sora-2-pro**
+```typescript
+{
+  model: "sora-2-pro",                // Required: literal type
+  prompt: "A cat running in the park", // Required: string
+  images?: string[],                   // Optional: reference images
+  duration?: 15 | 25,                 // Optional: number (15 or 25), default: 15
+  aspectRatio?: "16:9" | "9:16"       // Optional: "16:9" or "9:16"
+}
+
+// Example:
+await monet.createTask({
+  type: "video",
+  input: {
+    model: "sora-2-pro",
+    prompt: "A futuristic city with flying cars",
+    duration: 25,
+    aspectRatio: "16:9"
+  }
+});
+```
+
+---
 
 #### Veo (Google)
-| Model | Parameters |
-|-------|------------|
-| veo-3-1-fast | prompt, images, aspect_ratio: 16:9\|9:16 |
-| veo-3-1 | prompt, images, aspect_ratio: 16:9\|9:16 |
-| veo-3-fast | prompt, images, negative_prompt |
-| veo-3 | prompt, images, negative_prompt |
+
+**veo-3-1-fast**
+```typescript
+{
+  model: "veo-3-1-fast",              // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional: reference images
+  aspectRatio?: "16:9" | "9:16"       // Optional
+}
+```
+
+**veo-3-1**
+```typescript
+{
+  model: "veo-3-1",                   // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  aspectRatio?: "16:9" | "9:16"       // Optional
+}
+```
+
+**veo-3-fast**
+```typescript
+{
+  model: "veo-3-fast",                // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  negativePrompt?: string             // Optional: negative prompt
+}
+```
+
+**veo-3**
+```typescript
+{
+  model: "veo-3",                     // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  negativePrompt?: string             // Optional
+}
+```
+
+---
 
 #### Wan
-| Model | Parameters |
-|-------|------------|
-| wan-2-6 | prompt, images, **duration: 5\|10\|15**, resolution: 720p\|1080p, aspect_ratio: 16:9\|9:16\|4:3\|3:4\|1:1, shot_type: single\|multi |
-| wan-2-5 | prompt, images, **duration: 5\|10**, resolution: 480p\|720p\|1080p, aspect_ratio: 16:9\|9:16\|4:3\|3:4\|1:1 |
-| wan-2-2-flash | prompt, images, **duration: 5\|10**, resolution: 480p\|720p\|1080p, negative_prompt |
-| wan-2-2 | prompt, images, **duration: 5\|10**, resolution: 480p\|1080p, aspect_ratio: 16:9\|9:16\|4:3\|3:4\|1:1, negative_prompt |
+
+**wan-2-6**
+```typescript
+{
+  model: "wan-2-6",                   // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10 | 15,             // Optional: 5, 10, or 15 seconds
+  resolution?: "720p" | "1080p",     // Optional
+  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1", // Optional
+  shotType?: "single" | "multi"       // Optional: single shot or multi-shot
+}
+
+// Example:
+await monet.createTask({
+  type: "video",
+  input: {
+    model: "wan-2-6",
+    prompt: "A panda eating bamboo",
+    duration: 10,
+    resolution: "1080p",
+    aspectRatio: "16:9",
+    shotType: "single"
+  }
+});
+```
+
+**wan-2-5**
+```typescript
+{
+  model: "wan-2-5",                   // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional: 5 or 10 seconds, default: 5
+  resolution?: "480p" | "720p" | "1080p", // Optional
+  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1" // Optional
+}
+```
+
+**wan-2-2-flash**
+```typescript
+{
+  model: "wan-2-2-flash",             // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  resolution?: "480p" | "720p" | "1080p", // Optional
+  negativePrompt?: string             // Optional
+}
+```
+
+**wan-2-2**
+```typescript
+{
+  model: "wan-2-2",                   // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  resolution?: "480p" | "1080p",      // Optional
+  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1", // Optional
+  negativePrompt?: string             // Optional
+}
+```
+
+---
 
 #### Kling
-| Model | Parameters |
-|-------|------------|
-| kling-2-6 | prompt, images, **duration: 5\|10**, aspect_ratio: 1:1\|16:9\|9:16, **generate_audio: boolean** |
-| kling-2-5 | prompt, images, **duration: 5\|10**, aspect_ratio: 1:1\|16:9\|9:16, negative_prompt |
-| kling-v2-1-master | prompt, images, **duration: 5\|10**, aspect_ratio: 1:1\|16:9\|9:16, **strength: number**, negative_prompt |
-| kling-v2-1 | prompt, images, **duration: 5\|10**, aspect_ratio: 1:1\|16:9\|9:16, **strength: number**, negative_prompt |
-| kling-v2 | prompt, images, **duration: 5\|10**, aspect_ratio: 1:1\|16:9\|9:16, **strength: number**, negative_prompt |
+
+**kling-2-6**
+```typescript
+{
+  model: "kling-2-6",                 // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional: 5 or 10 seconds, default: 5
+  aspectRatio?: "1:1" | "16:9" | "9:16", // Optional
+  generateAudio?: boolean             // Optional: whether to generate audio
+}
+
+// Example:
+await monet.createTask({
+  type: "video",
+  input: {
+    model: "kling-2-6",
+    prompt: "A person walking in the rain",
+    duration: 10,
+    aspectRatio: "16:9",
+    generateAudio: true
+  }
+});
+```
+
+**kling-2-5**
+```typescript
+{
+  model: "kling-2-5",                 // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  aspectRatio?: "1:1" | "16:9" | "9:16", // Optional
+  negativePrompt?: string             // Optional
+}
+```
+
+**kling-v2-1-master**
+```typescript
+{
+  model: "kling-v2-1-master",         // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  aspectRatio?: "1:1" | "16:9" | "9:16", // Optional
+  strength?: number,                   // Optional: 0-1, controls generation strength
+  negativePrompt?: string             // Optional
+}
+
+// Example:
+await monet.createTask({
+  type: "video",
+  input: {
+    model: "kling-v2-1-master",
+    prompt: "A dancer performing ballet",
+    duration: 10,
+    strength: 0.8,
+    negativePrompt: "blurry, low quality"
+  }
+});
+```
+
+**kling-v2-1**
+```typescript
+{
+  model: "kling-v2-1",                 // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  aspectRatio?: "1:1" | "16:9" | "9:16", // Optional
+  strength?: number,                   // Optional
+  negativePrompt?: string             // Optional
+}
+```
+
+**kling-v2**
+```typescript
+{
+  model: "kling-v2",                   // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  aspectRatio?: "1:1" | "16:9" | "9:16", // Optional
+  strength?: number,                   // Optional
+  negativePrompt?: string             // Optional
+}
+```
+
+---
 
 #### Hailuo
-| Model | Parameters |
-|-------|------------|
-| hailuo-2-3 | prompt, images, **duration: 6\|10**, resolution: 768p\|1080p |
-| hailuo-2-3-fast | prompt, images, **duration: 6\|10**, resolution: 768p\|1080p |
-| hailuo-02 | prompt, images, **duration: 6\|10**, resolution: 768p\|1080p |
-| hailuo-01-live2d | prompt, images |
-| hailuo-01 | prompt, images |
+
+**hailuo-2-3**
+```typescript
+{
+  model: "hailuo-2-3",                 // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 6 | 10,                  // Optional: 6 or 10 seconds, default: 6
+  resolution?: "768p" | "1080p"       // Optional
+}
+```
+
+**hailuo-2-3-fast**
+```typescript
+{
+  model: "hailuo-2-3-fast",           // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 6 | 10,                  // Optional
+  resolution?: "768p" | "1080p"       // Optional
+}
+```
+
+**hailuo-02**
+```typescript
+{
+  model: "hailuo-02",                 // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 6 | 10,                  // Optional
+  resolution?: "768p" | "1080p"       // Optional
+}
+```
+
+**hailuo-01-live2d**
+```typescript
+{
+  model: "hailuo-01-live2d",          // Required
+  prompt: "A cat running",             // Required
+  images?: string[]                    // Optional
+}
+```
+
+**hailuo-01**
+```typescript
+{
+  model: "hailuo-01",                 // Required
+  prompt: "A cat running",             // Required
+  images?: string[]                    // Optional
+}
+```
+
+---
 
 #### Doubao Seedance
-| Model | Parameters |
-|-------|------------|
-| doubao-seedance-1-5-pro | prompt, images, **duration: number**, resolution: 480p\|720p, aspect_ratio: 1:1\|4:3\|16:9\|3:4\|9:16\|21:9, generate_audio |
-| doubao-seedance-1-0-pro-fast | prompt, images, **duration: number**, resolution: 720p\|1080p, aspect_ratio: 1:1\|4:3\|16:9\|3:4\|9:16\|21:9 |
-| doubao-seedance-1-0-pro | prompt, images, **duration: 5\|10**, resolution: 480p\|1080p, aspect_ratio: 1:1\|4:3\|16:9\|3:4\|9:16 |
-| doubao-seedance-1-0-lite | prompt, images, **duration: 5\|10**, resolution: 480p\|720p\|1080p |
+
+**doubao-seedance-1-5-pro**
+```typescript
+{
+  model: "doubao-seedance-1-5-pro",   // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: number,                   // Optional: custom duration in seconds
+  resolution?: "480p" | "720p",       // Optional
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9", // Optional
+  generateAudio?: boolean             // Optional
+}
+```
+
+**doubao-seedance-1-0-pro-fast**
+```typescript
+{
+  model: "doubao-seedance-1-0-pro-fast", // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: number,                   // Optional
+  resolution?: "720p" | "1080p",      // Optional
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9" // Optional
+}
+```
+
+**doubao-seedance-1-0-pro**
+```typescript
+{
+  model: "doubao-seedance-1-0-pro",   // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  resolution?: "480p" | "1080p",      // Optional
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" // Optional
+}
+```
+
+**doubao-seedance-1-0-lite**
+```typescript
+{
+  model: "doubao-seedance-1-0-lite", // Required
+  prompt: "A cat running",             // Required
+  images?: string[],                   // Optional
+  duration?: 5 | 10,                  // Optional
+  resolution?: "480p" | "720p" | "1080p" // Optional
+}
+```
+
+---
 
 #### Special Features
-| Model | Parameters |
-|-------|------------|
-| kling-motion-control | **prompt (required)**, **images (required)**, **videos (required)**, resolution: 720p\|1080p |
-| runway-act-two | **images (required)**, **videos (required)**, aspect_ratio: 1:1\|4:3\|16:9\|3:4\|9:16\|21:9 |
-| wan-animate-mix | **videos (required)**, **images (required)** |
-| wan-animate-mix-pro | **videos (required)**, **images (required)** |
-| wan-animate-move | **videos (required)**, **images (required)** |
-| wan-animate-move-pro | **videos (required)**, **images (required)** |
+
+**kling-motion-control** (动作控制)
+```typescript
+{
+  model: "kling-motion-control",       // Required
+  prompt: "Detailed action description", // Required: must describe the motion
+  images: string[],                    // Required: at least 1 reference image
+  videos: string[],                    // Required: at least 1 reference video
+  resolution?: "720p" | "1080p"       // Optional
+}
+
+// Example:
+await monet.createTask({
+  type: "video",
+  input: {
+    model: "kling-motion-control",
+    prompt: "Person walking forward with arms swinging",
+    images: ["https://example.com/person.jpg"],
+    videos: ["https://example.com/motion.mp4"],
+    resolution: "1080p"
+  }
+});
+```
+
+**runway-act-two** (动作迁移)
+```typescript
+{
+  model: "runway-act-two",             // Required
+  images: string[],                    // Required: at least 1
+  videos: string[],                    // Required: at least 1
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9" // Optional
+}
+```
+
+**wan-animate-mix** (视频换人)
+```typescript
+{
+  model: "wan-animate-mix",            // Required
+  videos: string[],                    // Required: original video
+  images: string[]                     // Required: reference character image
+}
+```
+
+**wan-animate-mix-pro**
+```typescript
+{
+  model: "wan-animate-mix-pro",        // Required
+  videos: string[],                    // Required
+  images: string[]                     // Required
+}
+```
+
+**wan-animate-move** (动作迁移)
+```typescript
+{
+  model: "wan-animate-move",           // Required
+  videos: string[],                    // Required: motion reference video
+  images: string[]                      // Required: target character image
+}
+```
+
+**wan-animate-move-pro**
+```typescript
+{
+  model: "wan-animate-move-pro",       // Required
+  videos: string[],                    // Required
+  images: string[]                      // Required
+}
+```
+
+---
 
 ### Image Generation
 
 #### GPT (OpenAI)
-| Model | Parameters |
-|-------|------------|
-| gpt-4o | prompt, images, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16, style |
-| gpt-image-1-5 | prompt, **images (max 10)**, aspect_ratio: 1:1\|3:2\|2:3, quality: auto\|low\|medium\|high |
+
+**gpt-4o**
+```typescript
+{
+  model: "gpt-4o",                    // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional: reference images
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16", // Optional
+  style?: string                        // Optional: custom style
+}
+
+// Example:
+await monet.createTask({
+  type: "image",
+  input: {
+    model: "gpt-4o",
+    prompt: "A cute orange cat sitting on a windowsill",
+    aspectRatio: "16:9",
+    style: "natural"
+  }
+});
+```
+
+**gpt-image-1-5**
+```typescript
+{
+  model: "gpt-image-1-5",             // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional: max 10 reference images
+  aspectRatio?: "1:1" | "3:2" | "2:3", // Optional
+  quality?: "auto" | "low" | "medium" | "high" // Optional
+}
+```
+
+---
 
 #### Nano Banana
-| Model | Parameters |
-|-------|------------|
-| nano-banana-1 | prompt, **images (max 5)**, aspect_ratio: 1:1\|2:3\|3:2\|4:3\|3:4\|16:9\|9:16 |
-| nano-banana-2 | prompt, **images (max 14)**, aspect_ratio: 1:1\|2:3\|3:2\|4:3\|3:4\|4:5\|5:4\|16:9\|9:16\|21:9, **resolution: 1K\|2K\|4K** |
+
+**nano-banana-1**
+```typescript
+{
+  model: "nano-banana-1",              // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional: max 5 reference images
+  aspectRatio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "16:9" | "9:16" // Optional
+}
+```
+
+**nano-banana-2**
+```typescript
+{
+  model: "nano-banana-2",              // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional: max 14 reference images
+  aspectRatio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "4:5" | "5:4" | "16:9" | "9:16" | "21:9", // Optional
+  resolution?: "1K" | "2K" | "4K"     // Optional: output resolution
+}
+
+// Example:
+await monet.createTask({
+  type: "image",
+  input: {
+    model: "nano-banana-2",
+    prompt: "A futuristic cityscape",
+    images: ["https://example.com/ref1.jpg", "https://example.com/ref2.jpg"],
+    aspectRatio: "16:9",
+    resolution: "4K"
+  }
+});
+```
+
+---
 
 #### Wan
-| Model | Parameters |
-|-------|------------|
-| wan-i-2-6 | prompt, **images (max 4)**, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16\|21:9 |
-| wan-2-5 | prompt, **images (max 2)**, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16\|21:9 |
+
+**wan-i-2-6**
+```typescript
+{
+  model: "wan-i-2-6",                  // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional: max 4 reference images
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9" // Optional
+}
+```
+
+**wan-2-5**
+```typescript
+{
+  model: "wan-2-5",                   // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional: max 2 reference images
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9" // Optional
+}
+```
+
+---
 
 #### Flux
-| Model | Parameters |
-|-------|------------|
-| flux-2-dev | prompt, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16 |
-| flux-kontext-pro | prompt, images, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16, style |
-| flux-kontext-max | prompt, images, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16, style |
-| flux-1-schnell | prompt |
+
+**flux-2-dev**
+```typescript
+{
+  model: "flux-2-dev",                // Required
+  prompt: "A cute cat",                // Required
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" // Optional
+}
+```
+
+**flux-kontext-pro**
+```typescript
+{
+  model: "flux-kontext-pro",           // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16", // Optional
+  style?: string                       // Optional
+}
+```
+
+**flux-kontext-max**
+```typescript
+{
+  model: "flux-kontext-max",           // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16", // Optional
+  style?: string                       // Optional
+}
+```
+
+**flux-1-schnell**
+```typescript
+{
+  model: "flux-1-schnell",             // Required
+  prompt: "A cute cat"                 // Required: only prompt is available
+}
+```
+
+---
 
 #### Imagen (Google)
-| Model | Parameters |
-|-------|------------|
-| imagen-3-0 | prompt, aspect_ratio: 1:1\|3:4\|4:3\|9:16\|16:9, style |
-| imagen-4-0 | prompt, aspect_ratio: 1:1\|3:4\|4:3\|9:16\|16:9, style |
+
+**imagen-3-0**
+```typescript
+{
+  model: "imagen-3-0",                // Required
+  prompt: "A cute cat",                // Required
+  aspectRatio?: "1:1" | "3:4" | "4:3" | "9:16" | "16:9", // Optional
+  style?: string                       // Optional
+}
+```
+
+**imagen-4-0**
+```typescript
+{
+  model: "imagen-4-0",                // Required
+  prompt: "A cute cat",                // Required
+  aspectRatio?: "1:1" | "3:4" | "4:3" | "9:16" | "16:9", // Optional
+  style?: string                       // Optional
+}
+```
+
+---
 
 #### Ideogram
-| Model | Parameters |
-|-------|------------|
-| ideogram-v2 | prompt, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16, style |
-| ideogram-v3 | prompt, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16, style |
+
+**ideogram-v2**
+```typescript
+{
+  model: "ideogram-v2",                // Required
+  prompt: "A cute cat",                // Required
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16", // Optional
+  style?: string                       // Optional
+}
+```
+
+**ideogram-v3**
+```typescript
+{
+  model: "ideogram-v3",                // Required
+  prompt: "A cute cat",                // Required
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16", // Optional
+  style?: string                       // Optional
+}
+```
+
+---
 
 #### Others
-| Model | Parameters |
-|-------|------------|
-| seedream-4-0 | prompt, **images (max 10)**, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16 |
-| stability-1-0 | prompt, aspect_ratio: 1:1\|4:3\|3:2\|16:9\|3:4\|2:3\|9:16, style, negative_prompt |
+
+**seedream-4-0**
+```typescript
+{
+  model: "seedream-4-0",              // Required
+  prompt: "A cute cat",                // Required
+  images?: string[],                   // Optional: max 10 reference images
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" // Optional
+}
+```
+
+**stability-1-0**
+```typescript
+{
+  model: "stability-1-0",             // Required
+  prompt: "A cute cat",                // Required
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16", // Optional
+  style?: string,                      // Optional
+  negativePrompt?: string             // Optional: negative prompt
+}
+```
+
+---
 
 ### Music Generation
 
-| Model | Parameters |
-|-------|------------|
-| suno-3.5 | prompt |
-| udio-v1-6 | prompt |
-
-## Input Parameters (Common)
-
-### Video
+**suno-3.5**
 ```typescript
 {
-  model: "sora-2",           // Required
-  prompt: "A cat running",   // Required
-  duration?: 5 | 10 | 15,     // Optional (varies by model)
-  aspectRatio?: "16:9",       // Optional
-  images?: ["url"],           // Optional: reference images
-  videos?: ["url"],           // Optional: reference videos
-  resolution?: "720p",        // Optional (varies by model)
-  negativePrompt?: "...",     // Optional
-  generateAudio?: true,      // Optional (Kling 2.6, Doubao)
-  shotType?: "single",       // Optional: single/multi (Wan 2.6)
-  strength?: 0.8             // Optional: 0-1 (Kling V2)
+  model: "suno-3.5",                  // Required
+  prompt: "Upbeat pop song with catchy melody" // Required: music description
+}
+
+// Example:
+await monet.createTask({
+  type: "music",
+  input: {
+    model: "suno-3.5",
+    prompt: "A relaxing acoustic guitar song with birds chirping, peaceful morning vibe"
+  }
+});
+```
+
+**udio-v1-6**
+```typescript
+{
+  model: "udio-v1-6",                 // Required
+  prompt: "Upbeat pop song"            // Required
 }
 ```
 
-### Image
-```typescript
-{
-  model: "gpt-4o",          // Required
-  prompt: "A cute cat",      // Required
-  aspectRatio?: "16:9",      // Optional
-  style?: "modern",          // Optional
-  quality?: "high",          // Optional: auto|low|medium|high
-  images?: ["url"],          // Optional: reference images (max varies)
-  resolution?: "2K",          // Optional (Nano Banana 2 only)
-  negativePrompt?: "..."     // Optional (Stability only)
-}
-```
-
-### Music
-```typescript
-{
-  model: "suno-3.5",        // Required
-  prompt: "Upbeat pop song"  // Required
-}
-```
+---
 
 ## Error Handling
 

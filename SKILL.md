@@ -74,115 +74,429 @@ console.log("Result:", task.outputs);
 ### Video Generation
 
 #### Sora (OpenAI)
-| Model | Parameters |
-|-------|------------|
-| sora-2 | prompt, images, duration: 10\|15, aspect_ratio: 16:9\|9:16 |
-| sora-2-pro | prompt, images, duration: 15\|25, aspect_ratio: 16:9\|9:16 |
+
+**sora-2**
+```typescript
+{
+  model: "sora-2",
+  prompt: string,                // Required
+  images?: string[],             // Optional
+  duration?: 10 | 15,           // Optional, default: 10
+  aspectRatio?: "16:9" | "9:16"
+}
+```
+
+**sora-2-pro**
+```typescript
+{
+  model: "sora-2-pro",
+  prompt: string,
+  images?: string[],
+  duration?: 15 | 25,           // Optional, default: 15
+  aspectRatio?: "16:9" | "9:16"
+}
+```
 
 #### Veo (Google)
-| Model | Parameters |
-|-------|------------|
-| veo-3-1-fast | prompt, images, aspect_ratio: 16:9\|9:16 |
-| veo-3-1 | prompt, images, aspect_ratio: 16:9\|9:16 |
-| veo-3-fast | prompt, images, negative_prompt |
-| veo-3 | prompt, images, negative_prompt |
+
+**veo-3-1-fast**, **veo-3-1**
+```typescript
+{
+  model: "veo-3-1-fast" | "veo-3-1",
+  prompt: string,
+  images?: string[],
+  aspectRatio?: "16:9" | "9:16"
+}
+```
+
+**veo-3-fast**, **veo-3**
+```typescript
+{
+  model: "veo-3-fast" | "veo-3",
+  prompt: string,
+  images?: string[],
+  negativePrompt?: string
+}
+```
 
 #### Wan
-| Model | Parameters |
-|-------|------------|
-| wan-2-6 | prompt, images, duration: 5\|10\|15, resolution: 720p\|1080p, aspect_ratio, shot_type |
-| wan-2-5 | prompt, images, duration: 5\|10, resolution, aspect_ratio |
-| wan-2-2-flash | prompt, images, duration: 5\|10, resolution, negative_prompt |
-| wan-2-2 | prompt, images, duration: 5\|10, resolution, aspect_ratio, negative_prompt |
+
+**wan-2-6**
+```typescript
+{
+  model: "wan-2-6",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10 | 15,
+  resolution?: "720p" | "1080p",
+  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1",
+  shotType?: "single" | "multi"
+}
+```
+
+**wan-2-5**
+```typescript
+{
+  model: "wan-2-5",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  resolution?: "480p" | "720p" | "1080p",
+  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1"
+}
+```
+
+**wan-2-2-flash**
+```typescript
+{
+  model: "wan-2-2-flash",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  resolution?: "480p" | "720p" | "1080p",
+  negativePrompt?: string
+}
+```
+
+**wan-2-2**
+```typescript
+{
+  model: "wan-2-2",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  resolution?: "480p" | "1080p",
+  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1",
+  negativePrompt?: string
+}
+```
 
 #### Kling
-| Model | Parameters |
-|-------|------------|
-| kling-2-6 | prompt, images, duration: 5\|10, aspect_ratio, generate_audio |
-| kling-2-5 | prompt, images, duration: 5\|10, aspect_ratio, negative_prompt |
-| kling-v2-1-master | prompt, images, duration: 5\|10, aspect_ratio, strength, negative_prompt |
-| kling-v2-1 | prompt, images, duration: 5\|10, aspect_ratio, strength, negative_prompt |
-| kling-v2 | prompt, images, duration: 5\|10, aspect_ratio, strength, negative_prompt |
+
+**kling-2-6**
+```typescript
+{
+  model: "kling-2-6",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  aspectRatio?: "1:1" | "16:9" | "9:16",
+  generateAudio?: boolean
+}
+```
+
+**kling-2-5**
+```typescript
+{
+  model: "kling-2-5",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  aspectRatio?: "1:1" | "16:9" | "9:16",
+  negativePrompt?: string
+}
+```
+
+**kling-v2-1-master**, **kling-v2-1**, **kling-v2**
+```typescript
+{
+  model: "kling-v2-1-master" | "kling-v2-1" | "kling-v2",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  aspectRatio?: "1:1" | "16:9" | "9:16",
+  strength?: number,            // 0-1
+  negativePrompt?: string
+}
+```
 
 #### Hailuo
-| Model | Parameters |
-|-------|------------|
-| hailuo-2-3 | prompt, images, duration: 6\|10, resolution: 768p\|1080p |
-| hailuo-2-3-fast | prompt, images, duration: 6\|10, resolution |
-| hailuo-02 | prompt, images, duration: 6\|10, resolution |
-| hailuo-01-live2d | prompt, images |
-| hailuo-01 | prompt, images |
+
+**hailuo-2-3**, **hailuo-2-3-fast**
+```typescript
+{
+  model: "hailuo-2-3" | "hailuo-2-3-fast",
+  prompt: string,
+  images?: string[],
+  duration?: 6 | 10,
+  resolution?: "768p" | "1080p"
+}
+```
+
+**hailuo-02**
+```typescript
+{
+  model: "hailuo-02",
+  prompt: string,
+  images?: string[],
+  duration?: 6 | 10,
+  resolution?: "768p" | "1080p"
+}
+```
+
+**hailuo-01-live2d**, **hailuo-01**
+```typescript
+{
+  model: "hailuo-01-live2d" | "hailuo-01",
+  prompt: string,
+  images?: string[]
+}
+```
 
 #### Doubao Seedance
-| Model | Parameters |
-|-------|------------|
-| doubao-seedance-1-5-pro | prompt, images, duration, resolution, aspect_ratio, generate_audio |
-| doubao-seedance-1-0-pro-fast | prompt, images, duration, resolution, aspect_ratio |
-| doubao-seedance-1-0-pro | prompt, images, duration: 5\|10, resolution, aspect_ratio |
-| doubao-seedance-1-0-lite | prompt, images, duration: 5\|10, resolution |
+
+**doubao-seedance-1-5-pro**
+```typescript
+{
+  model: "doubao-seedance-1-5-pro",
+  prompt: string,
+  images?: string[],
+  duration?: number,
+  resolution?: "480p" | "720p",
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9",
+  generateAudio?: boolean
+}
+```
+
+**doubao-seedance-1-0-pro-fast**
+```typescript
+{
+  model: "doubao-seedance-1-0-pro-fast",
+  prompt: string,
+  images?: string[],
+  duration?: number,
+  resolution?: "720p" | "1080p",
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9"
+}
+```
+
+**doubao-seedance-1-0-pro**
+```typescript
+{
+  model: "doubao-seedance-1-0-pro",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  resolution?: "480p" | "1080p",
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16"
+}
+```
+
+**doubao-seedance-1-0-lite**
+```typescript
+{
+  model: "doubao-seedance-1-0-lite",
+  prompt: string,
+  images?: string[],
+  duration?: 5 | 10,
+  resolution?: "480p" | "720p" | "1080p"
+}
+```
 
 #### Special Features
-| Model | Parameters |
-|-------|------------|
-| kling-motion-control | prompt (required), images (required), videos (required), resolution |
-| runway-act-two | images (required), videos (required), aspect_ratio |
-| wan-animate-mix | videos (required), images (required) |
-| wan-animate-mix-pro | videos (required), images (required) |
-| wan-animate-move | videos (required), images (required) |
-| wan-animate-move-pro | videos (required), images (required) |
+
+**kling-motion-control**
+```typescript
+{
+  model: "kling-motion-control",
+  prompt: string,                // Required
+  images: string[],              // Required: min 1
+  videos: string[],              // Required: min 1
+  resolution?: "720p" | "1080p"
+}
+```
+
+**runway-act-two**
+```typescript
+{
+  model: "runway-act-two",
+  images: string[],              // Required: min 1
+  videos: string[],              // Required: min 1
+  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9"
+}
+```
+
+**wan-animate-mix**, **wan-animate-mix-pro**
+```typescript
+{
+  model: "wan-animate-mix" | "wan-animate-mix-pro",
+  videos: string[],              // Required
+  images: string[]               // Required
+}
+```
+
+**wan-animate-move**, **wan-animate-move-pro**
+```typescript
+{
+  model: "wan-animate-move" | "wan-animate-move-pro",
+  videos: string[],              // Required
+  images: string[]               // Required
+}
+```
+
+---
 
 ### Image Generation
 
 #### GPT (OpenAI)
-| Model | Parameters |
-|-------|------------|
-| gpt-4o | prompt, images, aspect_ratio, style |
-| gpt-image-1-5 | prompt, images (max 10), aspect_ratio, quality |
+
+**gpt-4o**
+```typescript
+{
+  model: "gpt-4o",
+  prompt: string,
+  images?: string[],
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  style?: string
+}
+```
+
+**gpt-image-1-5**
+```typescript
+{
+  model: "gpt-image-1-5",
+  prompt: string,
+  images?: string[],             // max 10
+  aspectRatio?: "1:1" | "3:2" | "2:3",
+  quality?: "auto" | "low" | "medium" | "high"
+}
+```
 
 #### Nano Banana
-| Model | Parameters |
-|-------|------------|
-| nano-banana-1 | prompt, images (max 5), aspect_ratio |
-| nano-banana-2 | prompt, images (max 14), aspect_ratio, resolution: 1K\|2K\|4K |
+
+**nano-banana-1**
+```typescript
+{
+  model: "nano-banana-1",
+  prompt: string,
+  images?: string[],             // max 5
+  aspectRatio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "16:9" | "9:16"
+}
+```
+
+**nano-banana-2**
+```typescript
+{
+  model: "nano-banana-2",
+  prompt: string,
+  images?: string[],             // max 14
+  aspectRatio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "4:5" | "5:4" | "16:9" | "9:16" | "21:9",
+  resolution?: "1K" | "2K" | "4K"
+}
+```
 
 #### Wan
-| Model | Parameters |
-|-------|------------|
-| wan-i-2-6 | prompt, images (max 4), aspect_ratio |
-| wan-2-5 | prompt, images (max 2), aspect_ratio |
+
+**wan-i-2-6**
+```typescript
+{
+  model: "wan-i-2-6",
+  prompt: string,
+  images?: string[],             // max 4
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9"
+}
+```
+
+**wan-2-5**
+```typescript
+{
+  model: "wan-2-5",
+  prompt: string,
+  images?: string[],             // max 2
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9"
+}
+```
 
 #### Flux
-| Model | Parameters |
-|-------|------------|
-| flux-2-dev | prompt, aspect_ratio |
-| flux-kontext-pro | prompt, images, aspect_ratio, style |
-| flux-kontext-max | prompt, images, aspect_ratio, style |
-| flux-1-schnell | prompt |
+
+**flux-2-dev**
+```typescript
+{
+  model: "flux-2-dev",
+  prompt: string,
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16"
+}
+```
+
+**flux-kontext-pro**, **flux-kontext-max**
+```typescript
+{
+  model: "flux-kontext-pro" | "flux-kontext-max",
+  prompt: string,
+  images?: string[],
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  style?: string
+}
+```
+
+**flux-1-schnell**
+```typescript
+{
+  model: "flux-1-schnell",
+  prompt: string
+}
+```
 
 #### Imagen (Google)
-| Model | Parameters |
-|-------|------------|
-| imagen-3-0 | prompt, aspect_ratio, style |
-| imagen-4-0 | prompt, aspect_ratio, style |
+
+**imagen-3-0**, **imagen-4-0**
+```typescript
+{
+  model: "imagen-3-0" | "imagen-4-0",
+  prompt: string,
+  aspectRatio?: "1:1" | "3:4" | "4:3" | "9:16" | "16:9",
+  style?: string
+}
+```
 
 #### Ideogram
-| Model | Parameters |
-|-------|------------|
-| ideogram-v2 | prompt, aspect_ratio, style |
-| ideogram-v3 | prompt, aspect_ratio, style |
+
+**ideogram-v2**, **ideogram-v3**
+```typescript
+{
+  model: "ideogram-v2" | "ideogram-v3",
+  prompt: string,
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  style?: string
+}
+```
 
 #### Others
-| Model | Parameters |
-|-------|------------|
-| seedream-4-0 | prompt, images (max 10), aspect_ratio |
-| stability-1-0 | prompt, aspect_ratio, style, negative_prompt |
+
+**seedream-4-0**
+```typescript
+{
+  model: "seedream-4-0",
+  prompt: string,
+  images?: string[],             // max 10
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16"
+}
+```
+
+**stability-1-0**
+```typescript
+{
+  model: "stability-1-0",
+  prompt: string,
+  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  style?: string,
+  negativePrompt?: string
+}
+```
+
+---
 
 ### Music Generation
 
-| Model | Parameters |
-|-------|------------|
-| suno-3.5 | prompt |
-| udio-v1-6 | prompt |
+**suno-3.5**, **udio-v1-6**
+```typescript
+{
+  model: "suno-3.5" | "udio-v1-6",
+  prompt: string                 // Required: music description
+}
+```
+
+---
 
 ## API Methods
 
