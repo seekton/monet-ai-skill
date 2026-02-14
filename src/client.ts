@@ -36,11 +36,11 @@ export class MonetAIClient {
   async createTask(options: CreateTaskOptions): Promise<Task> {
     const response = await this.request<Task>("/api/v1/tasks/async", {
       method: "POST",
-      body: {
+      body: JSON.stringify({
         type: options.type,
         input: options.input,
         idempotency_key: options.idempotencyKey,
-      },
+      }),
     });
     return response;
   }
@@ -136,7 +136,7 @@ export class MonetAIClient {
 
   private async parseError(response: Response): Promise<MonetAIError> {
     try {
-      const data = await response.json();
+      const data = await response.json() as { error?: MonetAIError };
       return data.error || { code: "unknown", message: response.statusText };
     } catch {
       return { code: "unknown", message: response.statusText };

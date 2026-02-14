@@ -9,7 +9,6 @@ export type {
   VideoInput,
   ImageInput,
   MusicInput,
-  LipSyncInput,
   TaskInput,
   Output,
   Task,
@@ -22,7 +21,6 @@ export {
   VIDEO_MODELS,
   IMAGE_MODELS,
   MUSIC_MODELS,
-  LIPSYNC_MODELS,
   ALL_MODELS,
   MODELS_BY_TYPE,
 } from "./models.js";

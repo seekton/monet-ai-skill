@@ -24,5 +24,9 @@
     "monet-ai"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^25.2.3",
+    "typescript": "^5.9.3"
+  }
 }
