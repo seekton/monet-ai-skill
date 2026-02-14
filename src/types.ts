@@ -3,15 +3,13 @@
 export interface MonetAIConfig {
   /** API Key for authentication (starts with monet_) */
   apiKey: string;
-  /** Base URL for API (defaults to https://monet.vision) */
-  baseUrl?: string;
   /** Request timeout in ms (default: 60000) */
   timeout?: number;
 }
 
 // ============ Task Types ============
 
-export type TaskType = "video" | "image" | "music" | "lipsync";
+export type TaskType = "video" | "image" | "music";
 
 export type TaskStatus = 
   | "pending" 
@@ -44,13 +42,7 @@ export interface MusicInput {
   prompt?: string;
 }
 
-export interface LipSyncInput {
-  model: string;
-  video: string;
-  audio: string;
-}
-
-export type TaskInput = VideoInput | ImageInput | MusicInput | LipSyncInput;
+export type TaskInput = VideoInput | ImageInput | MusicInput;
 
 // ============ Output Types ============
 

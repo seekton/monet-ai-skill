@@ -19,15 +19,14 @@ interface ListTasksOptions {
 
 export class MonetAIClient {
   private readonly apiKey: string;
-  private readonly baseUrl: string;
   private readonly timeout: number;
+  private readonly baseUrl = "https://monet.vision";
 
   constructor(config: MonetAIConfig) {
     if (!config.apiKey || !config.apiKey.startsWith("monet_")) {
       throw new Error("Invalid API key format. Must start with 'monet_'");
     }
     this.apiKey = config.apiKey;
-    this.baseUrl = config.baseUrl || "https://monet.vision";
     this.timeout = config.timeout || 60000;
   }
 
