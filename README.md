@@ -272,3 +272,53 @@ import {
 ## License
 
 MIT
+
+## cURL Examples
+
+### Create Task (Async)
+
+```bash
+curl -X POST https://monet.vision/api/v1/tasks/async \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer monet_xxxxxxxx" \
+  -d '{
+    "type": "video",
+    "input": {
+      "model": "sora-2",
+      "prompt": "A cat running in the park",
+      "duration": 5,
+      "aspectRatio": "16:9"
+    },
+    "idempotency_key": "unique-key-123"
+  }'
+```
+
+### Create Task (Sync/Stream)
+
+```bash
+curl -X POST https://monet.vision/api/v1/tasks/sync \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer monet_xxxxxxxx" \
+  -N \
+  -d '{
+    "type": "video",
+    "input": {
+      "model": "sora-2",
+      "prompt": "A cat running"
+    }
+  }'
+```
+
+### Get Task
+
+```bash
+curl https://monet.vision/api/v1/tasks/task_xxx \
+  -H "Authorization: Bearer monet_xxxxxxxx"
+```
+
+### List Tasks
+
+```bash
+curl "https://monet.vision/api/v1/tasks/list?page=1&pageSize=20" \
+  -H "Authorization: Bearer monet_xxxxxxxx"
+```

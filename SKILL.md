@@ -141,3 +141,34 @@ const monet = new MonetAI({
 ```bash
 MONET_API_KEY=monet_xxx
 ```
+
+## cURL Examples
+
+### Create Task
+
+```bash
+curl -X POST https://monet.vision/api/v1/tasks/async \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer monet_xxx" \
+  -d '{
+    "type": "video",
+    "input": {
+      "model": "sora-2",
+      "prompt": "A cat running"
+    }
+  }'
+```
+
+### Get Task
+
+```bash
+curl https://monet.vision/api/v1/tasks/task_id \
+  -H "Authorization: Bearer monet_xxx"
+```
+
+### List Tasks
+
+```bash
+curl "https://monet.vision/api/v1/tasks/list?page=1" \
+  -H "Authorization: Bearer monet_xxx"
+```
