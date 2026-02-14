@@ -1,9 +1,8 @@
 ---
 name: monet-ai
 description: |
-  Monet AI - AI content generation API for video, image and music. 
-  Use when you need to generate videos, images, or music via API.
-  Supports Sora, Wan, Hailuo, Kling, GPT-4o, Flux, Suno and more.
+  Monet AI - AI content generation API for video, image and music.
+  Supports Sora, Wan, Hailuo, Kling, Veo, GPT-4o, Flux, Imagen, Suno and more.
 metadata:
   openclaw:
     requires:
@@ -22,8 +21,8 @@ AI content generation API for AI agents.
 ## When to Use
 
 Use this skill when:
-- You need to generate video content (Sora, Wan, Hailuo, Kling)
-- You need to generate images (GPT-4o, Flux, Imagen)
+- You need to generate video content (Sora, Wan, Hailuo, Kling, Veo)
+- You need to generate images (GPT-4o, Flux, Imagen, Ideogram)
 - You need to generate music (Suno, Udio)
 - You want to integrate AI generation capabilities into your agent workflow
 
@@ -72,22 +71,118 @@ console.log("Result:", task.outputs);
 
 ## Supported Models
 
-### Video
-- sora-2 - OpenAI Sora 2
-- wan-2-6 - Wan 2.6
-- hailuo-2.3 - Hailuo 2.3
-- kling-2-5 - Kling 2.5
-- *and more*
+### Video Generation
 
-### Image
-- gpt-4o - OpenAI GPT-4o
-- gpt-image-1-5 - OpenAI GPT Image 1.5
-- flux-2-dev - Flux 2 Dev
-- *and more*
+#### Sora (OpenAI)
+| Model | Parameters |
+|-------|------------|
+| sora-2 | prompt, images, duration: 10\|15, aspect_ratio: 16:9\|9:16 |
+| sora-2-pro | prompt, images, duration: 15\|25, aspect_ratio: 16:9\|9:16 |
 
-### Music
-- suno-3.5 - Suno 3.5
-- *and more*
+#### Veo (Google)
+| Model | Parameters |
+|-------|------------|
+| veo-3-1-fast | prompt, images, aspect_ratio: 16:9\|9:16 |
+| veo-3-1 | prompt, images, aspect_ratio: 16:9\|9:16 |
+| veo-3-fast | prompt, images, negative_prompt |
+| veo-3 | prompt, images, negative_prompt |
+
+#### Wan
+| Model | Parameters |
+|-------|------------|
+| wan-2-6 | prompt, images, duration: 5\|10\|15, resolution: 720p\|1080p, aspect_ratio, shot_type |
+| wan-2-5 | prompt, images, duration: 5\|10, resolution, aspect_ratio |
+| wan-2-2-flash | prompt, images, duration: 5\|10, resolution, negative_prompt |
+| wan-2-2 | prompt, images, duration: 5\|10, resolution, aspect_ratio, negative_prompt |
+
+#### Kling
+| Model | Parameters |
+|-------|------------|
+| kling-2-6 | prompt, images, duration: 5\|10, aspect_ratio, generate_audio |
+| kling-2-5 | prompt, images, duration: 5\|10, aspect_ratio, negative_prompt |
+| kling-v2-1-master | prompt, images, duration: 5\|10, aspect_ratio, strength, negative_prompt |
+| kling-v2-1 | prompt, images, duration: 5\|10, aspect_ratio, strength, negative_prompt |
+| kling-v2 | prompt, images, duration: 5\|10, aspect_ratio, strength, negative_prompt |
+
+#### Hailuo
+| Model | Parameters |
+|-------|------------|
+| hailuo-2-3 | prompt, images, duration: 6\|10, resolution: 768p\|1080p |
+| hailuo-2-3-fast | prompt, images, duration: 6\|10, resolution |
+| hailuo-02 | prompt, images, duration: 6\|10, resolution |
+| hailuo-01-live2d | prompt, images |
+| hailuo-01 | prompt, images |
+
+#### Doubao Seedance
+| Model | Parameters |
+|-------|------------|
+| doubao-seedance-1-5-pro | prompt, images, duration, resolution, aspect_ratio, generate_audio |
+| doubao-seedance-1-0-pro-fast | prompt, images, duration, resolution, aspect_ratio |
+| doubao-seedance-1-0-pro | prompt, images, duration: 5\|10, resolution, aspect_ratio |
+| doubao-seedance-1-0-lite | prompt, images, duration: 5\|10, resolution |
+
+#### Special Features
+| Model | Parameters |
+|-------|------------|
+| kling-motion-control | prompt (required), images (required), videos (required), resolution |
+| runway-act-two | images (required), videos (required), aspect_ratio |
+| wan-animate-mix | videos (required), images (required) |
+| wan-animate-mix-pro | videos (required), images (required) |
+| wan-animate-move | videos (required), images (required) |
+| wan-animate-move-pro | videos (required), images (required) |
+
+### Image Generation
+
+#### GPT (OpenAI)
+| Model | Parameters |
+|-------|------------|
+| gpt-4o | prompt, images, aspect_ratio, style |
+| gpt-image-1-5 | prompt, images (max 10), aspect_ratio, quality |
+
+#### Nano Banana
+| Model | Parameters |
+|-------|------------|
+| nano-banana-1 | prompt, images (max 5), aspect_ratio |
+| nano-banana-2 | prompt, images (max 14), aspect_ratio, resolution: 1K\|2K\|4K |
+
+#### Wan
+| Model | Parameters |
+|-------|------------|
+| wan-i-2-6 | prompt, images (max 4), aspect_ratio |
+| wan-2-5 | prompt, images (max 2), aspect_ratio |
+
+#### Flux
+| Model | Parameters |
+|-------|------------|
+| flux-2-dev | prompt, aspect_ratio |
+| flux-kontext-pro | prompt, images, aspect_ratio, style |
+| flux-kontext-max | prompt, images, aspect_ratio, style |
+| flux-1-schnell | prompt |
+
+#### Imagen (Google)
+| Model | Parameters |
+|-------|------------|
+| imagen-3-0 | prompt, aspect_ratio, style |
+| imagen-4-0 | prompt, aspect_ratio, style |
+
+#### Ideogram
+| Model | Parameters |
+|-------|------------|
+| ideogram-v2 | prompt, aspect_ratio, style |
+| ideogram-v3 | prompt, aspect_ratio, style |
+
+#### Others
+| Model | Parameters |
+|-------|------------|
+| seedream-4-0 | prompt, images (max 10), aspect_ratio |
+| stability-1-0 | prompt, aspect_ratio, style, negative_prompt |
+
+### Music Generation
+
+| Model | Parameters |
+|-------|------------|
+| suno-3.5 | prompt |
+| udio-v1-6 | prompt |
 
 ## API Methods
 
@@ -131,7 +226,7 @@ const list = await monet.listTasks({ page: 1, pageSize: 20 });
 ```typescript
 const monet = new MonetAI({
   apiKey: "monet_xxx",    // Required: API key from monet.vision
-  timeout: 60000           // Optional: timeout in ms
+  timeout: 60000          // Optional: timeout in ms
 });
 ```
 
