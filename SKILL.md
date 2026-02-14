@@ -56,7 +56,7 @@ const task = await monet.createTask({
     model: "sora-2",
     prompt: "A cat running in the park",
     duration: 5,
-    aspectRatio: "16:9"
+    aspect_ratio: "16:9"
   }
 });
 
@@ -82,7 +82,7 @@ console.log("Result:", task.outputs);
   prompt: string,                // Required
   images?: string[],             // Optional
   duration?: 10 | 15,           // Optional, default: 10
-  aspectRatio?: "16:9" | "9:16"
+  aspect_ratio?: "16:9" | "9:16"
 }
 ```
 
@@ -93,7 +93,7 @@ console.log("Result:", task.outputs);
   prompt: string,
   images?: string[],
   duration?: 15 | 25,           // Optional, default: 15
-  aspectRatio?: "16:9" | "9:16"
+  aspect_ratio?: "16:9" | "9:16"
 }
 ```
 
@@ -105,7 +105,7 @@ console.log("Result:", task.outputs);
   model: "veo-3-1-fast" | "veo-3-1",
   prompt: string,
   images?: string[],
-  aspectRatio?: "16:9" | "9:16"
+  aspect_ratio?: "16:9" | "9:16"
 }
 ```
 
@@ -115,7 +115,7 @@ console.log("Result:", task.outputs);
   model: "veo-3-fast" | "veo-3",
   prompt: string,
   images?: string[],
-  negativePrompt?: string
+  negative_prompt?: string
 }
 ```
 
@@ -129,8 +129,8 @@ console.log("Result:", task.outputs);
   images?: string[],
   duration?: 5 | 10 | 15,
   resolution?: "720p" | "1080p",
-  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1",
-  shotType?: "single" | "multi"
+  aspect_ratio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1",
+  shot_type?: "single" | "multi"
 }
 ```
 
@@ -142,7 +142,7 @@ console.log("Result:", task.outputs);
   images?: string[],
   duration?: 5 | 10,
   resolution?: "480p" | "720p" | "1080p",
-  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1"
+  aspect_ratio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1"
 }
 ```
 
@@ -154,7 +154,7 @@ console.log("Result:", task.outputs);
   images?: string[],
   duration?: 5 | 10,
   resolution?: "480p" | "720p" | "1080p",
-  negativePrompt?: string
+  negative_prompt?: string
 }
 ```
 
@@ -166,8 +166,8 @@ console.log("Result:", task.outputs);
   images?: string[],
   duration?: 5 | 10,
   resolution?: "480p" | "1080p",
-  aspectRatio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1",
-  negativePrompt?: string
+  aspect_ratio?: "16:9" | "9:16" | "4:3" | "3:4" | "1:1",
+  negative_prompt?: string
 }
 ```
 
@@ -180,8 +180,8 @@ console.log("Result:", task.outputs);
   prompt: string,
   images?: string[],
   duration?: 5 | 10,
-  aspectRatio?: "1:1" | "16:9" | "9:16",
-  generateAudio?: boolean
+  aspect_ratio?: "1:1" | "16:9" | "9:16",
+  generate_audio?: boolean
 }
 ```
 
@@ -192,8 +192,8 @@ console.log("Result:", task.outputs);
   prompt: string,
   images?: string[],
   duration?: 5 | 10,
-  aspectRatio?: "1:1" | "16:9" | "9:16",
-  negativePrompt?: string
+  aspect_ratio?: "1:1" | "16:9" | "9:16",
+  negative_prompt?: string
 }
 ```
 
@@ -204,9 +204,9 @@ console.log("Result:", task.outputs);
   prompt: string,
   images?: string[],
   duration?: 5 | 10,
-  aspectRatio?: "1:1" | "16:9" | "9:16",
+  aspect_ratio?: "1:1" | "16:9" | "9:16",
   strength?: number,            // 0-1
-  negativePrompt?: string
+  negative_prompt?: string
 }
 ```
 
@@ -253,8 +253,8 @@ console.log("Result:", task.outputs);
   images?: string[],
   duration?: number,
   resolution?: "480p" | "720p",
-  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9",
-  generateAudio?: boolean
+  aspect_ratio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9",
+  generate_audio?: boolean
 }
 ```
 
@@ -266,7 +266,7 @@ console.log("Result:", task.outputs);
   images?: string[],
   duration?: number,
   resolution?: "720p" | "1080p",
-  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9"
+  aspect_ratio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9"
 }
 ```
 
@@ -278,7 +278,7 @@ console.log("Result:", task.outputs);
   images?: string[],
   duration?: 5 | 10,
   resolution?: "480p" | "1080p",
-  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16"
+  aspect_ratio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16"
 }
 ```
 
@@ -312,7 +312,7 @@ console.log("Result:", task.outputs);
   model: "runway-act-two",
   images: string[],              // Required: min 1
   videos: string[],              // Required: min 1
-  aspectRatio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9"
+  aspect_ratio?: "1:1" | "4:3" | "16:9" | "3:4" | "9:16" | "21:9"
 }
 ```
 
@@ -346,7 +346,7 @@ console.log("Result:", task.outputs);
   model: "gpt-4o",
   prompt: string,
   images?: string[],
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
   style?: string
 }
 ```
@@ -357,7 +357,7 @@ console.log("Result:", task.outputs);
   model: "gpt-image-1-5",
   prompt: string,
   images?: string[],             // max 10
-  aspectRatio?: "1:1" | "3:2" | "2:3",
+  aspect_ratio?: "1:1" | "3:2" | "2:3",
   quality?: "auto" | "low" | "medium" | "high"
 }
 ```
@@ -370,7 +370,7 @@ console.log("Result:", task.outputs);
   model: "nano-banana-1",
   prompt: string,
   images?: string[],             // max 5
-  aspectRatio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "16:9" | "9:16"
+  aspect_ratio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "16:9" | "9:16"
 }
 ```
 
@@ -380,7 +380,7 @@ console.log("Result:", task.outputs);
   model: "nano-banana-2",
   prompt: string,
   images?: string[],             // max 14
-  aspectRatio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "4:5" | "5:4" | "16:9" | "9:16" | "21:9",
+  aspect_ratio?: "1:1" | "2:3" | "3:2" | "4:3" | "3:4" | "4:5" | "5:4" | "16:9" | "9:16" | "21:9",
   resolution?: "1K" | "2K" | "4K"
 }
 ```
@@ -393,7 +393,7 @@ console.log("Result:", task.outputs);
   model: "wan-i-2-6",
   prompt: string,
   images?: string[],             // max 4
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9"
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9"
 }
 ```
 
@@ -403,7 +403,7 @@ console.log("Result:", task.outputs);
   model: "wan-2-5",
   prompt: string,
   images?: string[],             // max 2
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9"
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16" | "21:9"
 }
 ```
 
@@ -414,7 +414,7 @@ console.log("Result:", task.outputs);
 {
   model: "flux-2-dev",
   prompt: string,
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16"
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16"
 }
 ```
 
@@ -424,7 +424,7 @@ console.log("Result:", task.outputs);
   model: "flux-kontext-pro" | "flux-kontext-max",
   prompt: string,
   images?: string[],
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
   style?: string
 }
 ```
@@ -444,7 +444,7 @@ console.log("Result:", task.outputs);
 {
   model: "imagen-3-0" | "imagen-4-0",
   prompt: string,
-  aspectRatio?: "1:1" | "3:4" | "4:3" | "9:16" | "16:9",
+  aspect_ratio?: "1:1" | "3:4" | "4:3" | "9:16" | "16:9",
   style?: string
 }
 ```
@@ -456,7 +456,7 @@ console.log("Result:", task.outputs);
 {
   model: "ideogram-v2" | "ideogram-v3",
   prompt: string,
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
   style?: string
 }
 ```
@@ -469,7 +469,7 @@ console.log("Result:", task.outputs);
   model: "seedream-4-0",
   prompt: string,
   images?: string[],             // max 10
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16"
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16"
 }
 ```
 
@@ -478,9 +478,9 @@ console.log("Result:", task.outputs);
 {
   model: "stability-1-0",
   prompt: string,
-  aspectRatio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
+  aspect_ratio?: "1:1" | "4:3" | "3:2" | "16:9" | "3:4" | "2:3" | "9:16",
   style?: string,
-  negativePrompt?: string
+  negative_prompt?: string
 }
 ```
 
