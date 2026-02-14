@@ -82,9 +82,11 @@ const task = await monet.createTask({
     aspect_ratio: "16:9",
     images: ["https://example.com/image1.jpg"]
   },
-  idempotencyKey: "unique-key-123"
+  idempotency_key: "unique-key-123"  // Optional but RECOMMENDED
 });
 ```
+
+> ⚠️ **Important**: `idempotency_key` is optional but **highly recommended**. Use a unique value (e.g., UUID) to prevent duplicate task creation if the request is retried. If the same `idempotency_key` is used within 24 hours, the API will return the existing task instead of creating a new one.
 
 ### Create Task (Sync/Stream)
 
