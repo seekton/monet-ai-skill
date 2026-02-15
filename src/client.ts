@@ -9,7 +9,7 @@ import type {
 interface CreateTaskOptions {
   type: TaskType;
   input: Record<string, unknown>;
-  idempotency_key?: string;
+  idempotency_key: string;
 }
 
 interface ListTasksOptions {
@@ -34,6 +34,10 @@ export class MonetAIClient {
    * Create a task asynchronously (returns immediately with task ID)
    */
   async createTask(options: CreateTaskOptions): Promise<Task> {
+    if (!options.idempotency_key) {
+      throw new Error("idempotency_key is required. Use a unique value (e.g., UUID) to prevent duplicate task creation.");
+    }
+
     const response = await this.request<Task>("/api/v1/tasks/async", {
       method: "POST",
       body: JSON.stringify({
