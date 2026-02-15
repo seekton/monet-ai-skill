@@ -86,7 +86,7 @@ const task = await monet.createTask({
 });
 ```
 
-> ⚠️ **Important**: `idempotency_key` is **required**. Use a unique value (e.g., UUID) to prevent duplicate task creation if the request is retried. If the same `idempotency_key` is used within 24 hours, the API will return the existing task instead of creating a new one.
+> ⚠️ **Important**: `idempotency_key` is **required**. Use a unique value (e.g., UUID) to prevent duplicate task creation if the request is retried.
 
 ### Create Task (Sync/Stream)
 
