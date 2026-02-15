@@ -3,6 +3,8 @@ name: monet-ai
 description: |
   Monet AI - AI content generation API for video, image and music.
   Supports Sora, Wan, Hailuo, Kling, Veo, GPT-4o, Flux, Imagen, Suno and more.
+  Use for: 生成图片, 生成视频, AI绘画, text-to-image, text-to-video, text-to-music,
+  gpt-4o, flux, imagen, suno, udio, sora, kling, wan, hailuo, veo, AI视频, AI音乐, AI创作
 metadata:
   openclaw:
     requires:
@@ -27,6 +29,17 @@ Use this skill when:
 - You need to generate images (GPT-4o, Flux, Imagen, Ideogram)
 - You need to generate music (Suno, Udio)
 - You want to integrate AI generation capabilities into your agent workflow
+
+## Triggers
+
+This skill will be triggered by:
+- "gpt-4o generate image" / "用gpt-4o生成图片" / "gpt-4o创图"
+- "flux生成一张图" / "flux generate image"
+- "sora生成视频" / "sora generate video"
+- "kling生成视频" / "kling generate video"
+- "suno生成音乐" / "suno generate music"
+- "AI生成图片" / "AI生成视频" / "AI创作"
+- Any request involving these models: sora, kling, wan, hailuo, veo, flux, gpt-4o, imagen, ideogram, suno, udio
 
 ## Installation
 
