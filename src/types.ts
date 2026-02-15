@@ -59,7 +59,7 @@ export interface Task {
   id: string;
   type: TaskType;
   status: TaskStatus;
-  idempotency_key?: string;
+  idempotency_key: string;
   input: Record<string, unknown>;
   outputs: Output[];
   created_at: string;
