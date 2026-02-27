@@ -35,7 +35,9 @@ export class MonetAIClient {
    */
   async createTask(options: CreateTaskOptions): Promise<Task> {
     if (!options.idempotency_key) {
-      throw new Error("idempotency_key is required. Use a unique value (e.g., UUID) to prevent duplicate task creation.");
+      throw new Error(
+        "idempotency_key is required. Use a unique value (e.g., UUID) to prevent duplicate task creation.",
+      );
     }
 
     const response = await this.request<Task>("/api/v1/tasks/async", {
@@ -52,9 +54,7 @@ export class MonetAIClient {
   /**
    * Create a task with streaming (SSE) - waits for completion
    */
-  async createTaskStream(
-    options: CreateTaskOptions
-  ): Promise<ReadableStream> {
+  async createTaskStream(options: CreateTaskOptions): Promise<ReadableStream> {
     const response = await fetch(`${this.baseUrl}/api/v1/tasks/sync`, {
       method: "POST",
       headers: {
@@ -92,9 +92,7 @@ export class MonetAIClient {
     if (options.pageSize) params.set("pageSize", String(options.pageSize));
 
     const query = params.toString();
-    const path = query 
-      ? `/api/v1/tasks/list?${query}` 
-      : "/api/v1/tasks/list";
+    const path = query ? `/api/v1/tasks/list?${query}` : "/api/v1/tasks/list";
 
     return await this.request<TaskList>(path);
   }
@@ -115,7 +113,11 @@ export class MonetAIClient {
     };
 
     // Serialize body if it's an object
-    if (init?.body && typeof init.body === "object" && !(init.body instanceof FormData)) {
+    if (
+      init?.body &&
+      typeof init.body === "object" &&
+      !(init.body instanceof FormData)
+    ) {
       requestInit.body = JSON.stringify(init.body);
     }
 
@@ -124,10 +126,12 @@ export class MonetAIClient {
 
       if (!response.ok) {
         const error = await this.parseError(response);
-        throw new Error(error.message || `Request failed with status ${response.status}`);
+        throw new Error(
+          error.message || `Request failed with status ${response.status}`,
+        );
       }
 
-      return await response.json() as T;
+      return (await response.json()) as T;
     } catch (error) {
       if (error instanceof Error && error.name === "AbortError") {
         throw new Error(`Request timeout after ${this.timeout}ms`);
@@ -140,7 +144,7 @@ export class MonetAIClient {
 
   private async parseError(response: Response): Promise<MonetAIError> {
     try {
-      const data = await response.json() as { error?: MonetAIError };
+      const data = (await response.json()) as { error?: MonetAIError };
       return data.error || { code: "unknown", message: response.statusText };
     } catch {
       return { code: "unknown", message: response.statusText };

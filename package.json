@@ -1,6 +1,6 @@
 {
   "name": "monet-ai",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Monet AI - AI content generation API for video, image and music",
   "type": "module",
   "main": "./dist/index.js",
@@ -11,9 +11,14 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch"
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "ai",

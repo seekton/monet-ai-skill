@@ -11,11 +11,7 @@ export interface MonetAIConfig {
 
 export type TaskType = "video" | "image" | "music";
 
-export type TaskStatus = 
-  | "pending" 
-  | "processing" 
-  | "completed" 
-  | "failed";
+export type TaskStatus = "pending" | "processing" | "success" | "failed";
 
 // ============ Input Types ============
 

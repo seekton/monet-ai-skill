@@ -2,14 +2,14 @@
 
 /** Available video generation models */
 export const VIDEO_MODELS = {
-  // Sora
-  SORA_2: "sora-2",
-  SORA_2_PRO: "sora-2-pro",
   // Veo
   VEO_3_1_FAST: "veo-3-1-fast",
   VEO_3_1: "veo-3-1",
   VEO_3_FAST: "veo-3-fast",
   VEO_3: "veo-3",
+  // Sora
+  SORA_2: "sora-2",
+  SORA_2_PRO: "sora-2-pro",
   // Wan
   WAN_2_6: "wan-2-6",
   WAN_2_5: "wan-2-5",
@@ -48,10 +48,15 @@ export const IMAGE_MODELS = {
   GPT_IMAGE_1_5: "gpt-image-1-5",
   // Nano Banana
   NANO_BANANA_1: "nano-banana-1",
+  NANO_BANANA_1_PRO: "nano-banana-1-pro",
   NANO_BANANA_2: "nano-banana-2",
   // Wan
   WAN_I_2_6: "wan-i-2-6",
   WAN_2_5: "wan-2-5",
+  // Seedream
+  SEEDREAM_5_0: "seedream-5-0",
+  SEEDREAM_4_5: "seedream-4-5",
+  SEEDREAM_4_0: "seedream-4-0",
   // Flux
   FLUX_2_DEV: "flux-2-dev",
   FLUX_KONTEXT_PRO: "flux-kontext-pro",
@@ -63,8 +68,7 @@ export const IMAGE_MODELS = {
   // Ideogram
   IDEOGRAM_V2: "ideogram-v2",
   IDEOGRAM_V3: "ideogram-v3",
-  // Others
-  SEEDREAM_4_0: "seedream-4-0",
+  // Stability AI
   STABILITY_1_0: "stability-1-0",
 } as const;
 
