@@ -27,12 +27,6 @@ Use this skill when:
 - You need to generate music (Suno, Udio)
 - You want to integrate AI generation capabilities into your agent workflow
 
-## Installation
-
-```bash
-npm install monet-ai
-```
-
 ## Getting API Key
 
 1. Visit https://monet.vision to register an account
@@ -43,31 +37,102 @@ If you don't have an API Key, ask your owner to apply at monet.vision.
 
 ## Quick Start
 
+### Create a Video Generation Task
+
+```bash
+curl -X POST https://monet.vision/api/v1/tasks/async \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $MONET_API_KEY" \
+  -d '{
+    "type": "video",
+    "input": {
+      "model": "sora-2",
+      "prompt": "A cat running in the park",
+      "duration": 5,
+      "aspect_ratio": "16:9"
+    },
+    "idempotency_key": "unique-key-123"
+  }'
+```
+
+> ⚠️ **Important**: `idempotency_key` is **required**. Use a unique value (e.g., UUID) to prevent duplicate task creation if the request is retried.
+
+Response:
+
+```json
+{
+  "id": "task_abc123",
+  "status": "pending",
+  "type": "video",
+  "created_at": "2026-02-27T10:00:00Z"
+}
+```
+
+### Get Task Status and Result
+
+Task processing is asynchronous. You need to poll the task status until it becomes `success` or `failed`. **Recommended polling interval: 5 seconds**.
+
+```bash
+curl https://monet.vision/api/v1/tasks/task_abc123 \
+  -H "Authorization: Bearer $MONET_API_KEY"
+```
+
+Response when completed:
+
+```json
+{
+  "id": "task_abc123",
+  "status": "success",
+  "type": "video",
+  "outputs": [
+    {
+      "model": "sora-2",
+      "status": "success",
+      "progress": 100,
+      "url": "https://files.monet.vision/..."
+    }
+  ],
+  "created_at": "2026-02-27T10:00:00Z",
+  "updated_at": "2026-02-27T10:01:30Z"
+}
+```
+
+**Example: Poll until completion**
+
 ```typescript
-import { MonetAI } from "monet-ai";
+const TASK_ID = "task_abc123";
+const MONET_API_KEY = process.env.MONET_API_KEY;
 
-const monet = new MonetAI({
-  apiKey: process.env.MONET_API_KEY!,
-});
+async function pollTask() {
+  while (true) {
+    const response = await fetch(
+      `https://monet.vision/api/v1/tasks/${TASK_ID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${MONET_API_KEY}`,
+        },
+      },
+    );
 
-// Create a video generation task
-const task = await monet.createTask({
-  type: "video",
-  input: {
-    model: "sora-2",
-    prompt: "A cat running in the park",
-    duration: 5,
-    aspect_ratio: "16:9",
-  },
-});
+    const data = await response.json();
+    const status = data.status;
 
-// Poll for result
-while (task.status === "pending" || task.status === "processing") {
-  await new Promise((r) => setTimeout(r, 3000));
-  task = await monet.getTask(task.id);
+    if (status === "success") {
+      console.log("Task completed successfully!");
+      console.log(JSON.stringify(data, null, 2));
+      break;
+    } else if (status === "failed") {
+      console.log("Task failed!");
+      console.log(JSON.stringify(data, null, 2));
+      break;
+    } else {
+      console.log(`Task status: ${status}, waiting...`);
+      await new Promise((resolve) => setTimeout(resolve, 5000)); // Wait 5 seconds
+    }
+  }
 }
 
-console.log("Result:", task.outputs);
+pollTask();
 ```
 
 ## Supported Models
@@ -997,91 +1062,143 @@ _Professional music creation_
 
 ---
 
-## API Methods
+## API Reference
 
-### createTask(options)
+### Create Task (Async)
 
-Create an async task. Returns immediately with task ID.
+POST `/api/v1/tasks/async` - Create an async task. Returns immediately with task ID.
 
-```typescript
-const task = await monet.createTask({
-  type: "video",
-  input: { model: "sora-2", prompt: "A cat" },
-  idempotency_key: "unique-key", // Required - must be a unique value (e.g., UUID)
-});
-```
-
-> ⚠️ **Important**: `idempotency_key` is **required**. Use a unique value (e.g., UUID) to prevent duplicate task creation if the request is retried.
-
-### createTaskStream(options)
-
-Create a task with SSE streaming. Returns ReadableStream.
-
-```typescript
-const stream = await monet.createTaskStream({
-  type: "video",
-  input: { model: "sora-2", prompt: "A cat" },
-});
-```
-
-### getTask(taskId)
-
-Get task status and result.
-
-```typescript
-const task = await monet.getTask("task_id");
-```
-
-### listTasks(options)
-
-List tasks with pagination.
-
-```typescript
-const list = await monet.listTasks({ page: 1, pageSize: 20 });
-```
-
-## Configuration
-
-```typescript
-const monet = new MonetAI({
-  apiKey: "monet_xxx", // Required: API key from monet.vision
-  timeout: 60000, // Optional: timeout in ms
-});
-```
-
-## Environment Variables
-
-```bash
-MONET_API_KEY=monet_xxx
-```
-
-## curl Examples
-
-### Create Task
+**Request:**
 
 ```bash
 curl -X POST https://monet.vision/api/v1/tasks/async \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer monet_xxx" \
+  -H "Authorization: Bearer $MONET_API_KEY" \
   -d '{
     "type": "video",
     "input": {
       "model": "sora-2",
       "prompt": "A cat running"
-    }
+    },
+    "idempotency_key": "unique-key-123"
+  }'
+```
+
+> ⚠️ **Important**: `idempotency_key` is **required**. Use a unique value (e.g., UUID) to prevent duplicate task creation if the request is retried.
+
+**Response:**
+
+```json
+{
+  "id": "task_abc123",
+  "status": "pending",
+  "type": "video",
+  "created_at": "2026-02-27T10:00:00Z"
+}
+```
+
+### Create Task (Streaming)
+
+POST `/api/v1/tasks/sync` - Create a task with SSE streaming. Waits for completion and streams progress.
+
+**Request:**
+
+```bash
+curl -X POST https://monet.vision/api/v1/tasks/sync \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $MONET_API_KEY" \
+  -N \
+  -d '{
+    "type": "video",
+    "input": {
+      "model": "sora-2",
+      "prompt": "A cat running"
+    },
+    "idempotency_key": "unique-key-123"
   }'
 ```
 
 ### Get Task
 
+GET `/api/v1/tasks/{taskId}` - Get task status and result.
+
+**Request:**
+
 ```bash
-curl https://monet.vision/api/v1/tasks/task_id \
-  -H "Authorization: Bearer monet_xxx"
+curl https://monet.vision/api/v1/tasks/task_abc123 \
+  -H "Authorization: Bearer $MONET_API_KEY"
+```
+
+**Response:**
+
+```json
+{
+  "id": "task_abc123",
+  "status": "success",
+  "type": "video",
+  "outputs": [
+    {
+      "model": "sora-2",
+      "status": "success",
+      "progress": 100,
+      "url": "https://files.monet.vision/..."
+    }
+  ],
+  "created_at": "2026-02-27T10:00:00Z",
+  "updated_at": "2026-02-27T10:01:30Z"
+}
 ```
 
 ### List Tasks
 
+GET `/api/v1/tasks/list` - List tasks with pagination.
+
+**Request:**
+
 ```bash
-curl "https://monet.vision/api/v1/tasks/list?page=1" \
-  -H "Authorization: Bearer monet_xxx"
+curl "https://monet.vision/api/v1/tasks/list?page=1&pageSize=20" \
+  -H "Authorization: Bearer $MONET_API_KEY"
+```
+
+**Response:**
+
+```json
+{
+  "tasks": [
+    {
+      "id": "task_abc123",
+      "status": "success",
+      "type": "video",
+      "outputs": [
+        {
+          "model": "sora-2",
+          "status": "success",
+          "progress": 100,
+          "url": "https://files.monet.vision/..."
+        }
+      ],
+      "created_at": "2026-02-27T10:00:00Z",
+      "updated_at": "2026-02-27T10:01:30Z"
+    }
+  ],
+  "page": 1,
+  "pageSize": 20,
+  "total": 100
+}
+```
+
+## Configuration
+
+### Environment Variables
+
+```bash
+export MONET_API_KEY="monet_xxx"
+```
+
+### Authentication
+
+All API requests require authentication via the `Authorization` header:
+
+```
+Authorization: Bearer monet_xxx
 ```
