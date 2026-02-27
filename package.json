@@ -1,6 +1,6 @@
 {
   "name": "monet-ai",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Monet AI - AI content generation API for video, image and music",
   "type": "module",
   "main": "./dist/index.js",
